@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投票設定</title>
+    <link rel="stylesheet" href="css/index.min.css">
+    <script src="https://kit.fontawesome.com/a0f51e6bd1.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body style="overflow: auto;">
+    <div class="panel settings">
+        <div class="panel-header">投票設定</div>
+        <div class="panel-content">
+            <div class="btn start inline">受付開始 - START</div>
+            <div class="btn stop inline">受付終了 - STOP</div> -=-=- <div class="btn canChange inline">変更可能 - can Change</div>
+            <div class="btn notChange inline">変更不可 - can't Change</div>
+            <hr>
+            <div class="btn show inline">OBS表示 - SHOW</div>
+            <div class="btn hide inline">OBS非表示 - HIDE</div>
+            <div class="btn data-show inline">OBSデータ表示 - DATA SHOW</div>
+            <div class="btn data-hide inline">OBSデータ非表示 - DATA HIDE</div>
+            <hr>
+            <div class="btn update inline">表示の更新</div>
+            <hr>
+            <input class="title inline" type="text" placeholder="タイトルを入力...">
+            <div class="btn title-update inline">タイトルの設定 - 送信</div>
+            <hr>
+            <input class="oneline inline" type="text" placeholder="数値を入力...">
+            <div class="btn oneline-update inline">一行の個数 - 送信</div>
+            <hr>
+            <div style="position: relative;">
+                <div class="btn allclear inline">全消し(サーバには反映されません)</div>
+                <div class="btn reset inline" style="position: absolute; right: 0;">投票データの削除</div>
+            </div>
+            <hr>
+            <div class="btn add inline">項目の追加</div>
+            <div class="data">
+                <div class="data">項目名</div>
+                <div class="color">文字色</div>                <div class="back-color">背景色</div>
+                <div class="cross">x</div>
+            </div>
+            <div class="data-group">
+                <div class="data">
+                    <input class="text inline" type="text" placeholder="項目を入力..."><input class="color inline" type="color"><input class="back-color inline" type="color">
+                    <div class="cross">✕</div>
+                </div>
+            </div>
+            <hr>
+            <div class="btn send inline">内容の設定 - 送信</div>
+            <hr>
+            <div class="current-title">
+
+            </div>
+            <div class="current">
+
+            </div>
+        </div>
+    </div>
+    <script src="js/settings/bundle.js"></script>
+</body>
+</html>
