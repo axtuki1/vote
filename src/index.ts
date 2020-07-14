@@ -50,7 +50,7 @@ app.listen(process.env.PORT || config.serverPort, function () {
 });
 
 const server = require("ws").Server;
-const s = new server({ port: process.env.PORT || config.websocketPort });
+const s = new server(app);
 const wsApi:{[key: string]: WebSocketAPI} = {};
 
 console.log("Loading websocket module....");
