@@ -8,6 +8,7 @@ class postVote extends api_1.API {
         this.type = "post";
         this.response = (req, res) => {
             let data = req.body;
+            let ip = req.header("X-Real-IP");
             const settings = DataHolder_1.DataHolder.getData("settings");
             // console.log(settings);
             const voteType = DataHolder_1.DataHolder.getData("voteType");
@@ -20,7 +21,7 @@ class postVote extends api_1.API {
             }
             let voteData = DataHolder_1.DataHolder.getData("voteData");
             let votedUser = DataHolder_1.DataHolder.getData("votedUser");
-            if (votedUser.indexOf(req.ip) > -1) {
+            if (votedUser.indexOf(ip) > -1) {
                 if (!settings.voteChange) {
                     res.json({
                         mode: "error",
@@ -30,19 +31,21 @@ class postVote extends api_1.API {
                 }
                 else {
                     Object.keys(voteData).forEach(key => {
-                        if (voteData[key].indexOf(req.ip) > -1) {
-                            delete voteData[key];
+                        if (voteData[key].indexOf(ip) > -1) {
+                            voteData[key] = voteData[key].filter(function (a) {
+                                return a !== ip;
+                            });
                         }
                     });
                 }
             }
             else {
-                votedUser.push(req.ip);
+                votedUser.push(ip);
             }
             DataHolder_1.DataHolder.setData("votedUser", votedUser);
             if (voteData[data.type] == null)
                 voteData[data.type] = [];
-            voteData[data.type].push(req.ip);
+            voteData[data.type].push(ip);
             res.json({
                 mode: "ok",
                 target: data.type

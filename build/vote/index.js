@@ -3,6 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Library_1 = require("../Library");
 $(function () {
     const update = () => {
+        fetch("/api/v1/getVoteTitle").then(function (response) {
+            return response.json();
+        })
+            .then(function (json) {
+            const data = json;
+            if (data["title"] != null) {
+                $(".title").html(data["title"]);
+            }
+        }).catch((reason) => {
+        });
         fetch("/api/v1/getVoteType").then(function (response) {
             return response.json();
         })

@@ -5,6 +5,7 @@ export class resetVoteData extends API{
     public type: string = "post";
     public response = (req, res) => {
         DataHolder.setData("voteData",{});
+        DataHolder.setData("votedUser", []);
         res.json({
             "mode": "ok"
         });

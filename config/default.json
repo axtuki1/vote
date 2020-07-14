@@ -1,4 +1,4 @@
 {
-    "serverPort": 3000,
-    "websocketPort": 5001
+    "serverPort": 3012,
+    "websocketPort": 5012
 }

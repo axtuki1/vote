@@ -38,11 +38,11 @@ fs.readdir('./build/api', function (err, files) {
     });
 });
 app.use(router);
-app.listen(process.env.PORT || config.serverPort, function () {
+app.listen(config.serverPort, function () {
     console.log("listening to PORT: " + config.serverPort);
 });
 const server = require("ws").Server;
-const s = new server({ port: 443 });
+const s = new server({ port: config.websocketPort });
 const wsApi = {};
 console.log("Loading websocket module....");
 fs.readdir('./build/wsApi', function (err, files) {
@@ -102,6 +102,14 @@ const init = () => {
     DataHolder_1.DataHolder.setData("oneLine", d);
 };
 init();
+setInterval(() => {
+    s.clients.forEach(client => {
+        client.send(JSON.stringify({
+            "mode": "ping",
+            "text": "keepAlive"
+        }));
+    });
+}, 25 * 1000);
 DataHolder_1.DataHolder.setData("wsServer", s);
 s.on("connection", ws => {
     init();
@@ -124,7 +132,5 @@ s.on("connection", ws => {
                 oneLine: DataHolder_1.DataHolder.getData("oneLine")
             }));
         }
-    });
-    ws.on('close', () => {
     });
 });

@@ -8,6 +8,7 @@ class resetVoteData extends api_1.API {
         this.type = "post";
         this.response = (req, res) => {
             DataHolder_1.DataHolder.setData("voteData", {});
+            DataHolder_1.DataHolder.setData("votedUser", []);
             res.json({
                 "mode": "ok"
             });

@@ -2,6 +2,17 @@ import { Library } from "../Library";
 
 $(function(){
     const update = ()=>{
+        fetch("/api/v1/getVoteTitle").then(function(response) {
+            return response.json();
+        })
+        .then(function(json) {
+            const data = json;
+            if( data["title"] != null ){
+                $(".title").html(data["title"]);
+            }
+        }).catch((reason)=>{
+
+        });
         fetch("/api/v1/getVoteType").then(function(response) {
             return response.json();
         })
@@ -27,9 +38,7 @@ $(function(){
                     }
                     let el = $("<div></div>").addClass("vote").append(element["text"]).css("background",element["backColor"]).css("color",element["color"]).css("width","calc("+100/oneline+"% - 10px)");
                     el.get(0).dataset.id = key;
-                    $(".vote-group-"+i).append(
-                        el
-                    );
+                    $(".vote-group-"+i).append(el);
                 });
             } else if( data["mode"] == "error" ){
                 $(".top").html(data["text"]);

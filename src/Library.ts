@@ -33,6 +33,6 @@ export class Library {
     }
 
     static floor(base, ext){
-        return Math.floor(base * (10 ^ ext)) / (10 ^ ext);
+        return Math.floor(base * (10 ** ext)) / (10 ** ext);
     }
 }
