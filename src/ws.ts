@@ -13,7 +13,9 @@ export abstract class WebSocketAPI{
             DataHolder.setData("wsClients", this.clients);
             // this.clients.forEach(a=>{ a.send(JSON.stringify({ user: name, method: 'close', clients: clients.map(a=>name) })); });
         });
+        console.log("c");
         ws.on('message', (msg)=>{
+            console.log("msg");
             this.message(ws, req, msg);
         })
     }
