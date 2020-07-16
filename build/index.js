@@ -98,7 +98,9 @@ fs.readdir('./build/wsApi', function (err, files) {
         Promise.resolve().then(() => require('./wsApi/' + name)).then((module) => {
             const api = new module[name]();
             wsApi[name] = api;
-            app.ws('/' + name, api.connect);
+            app.ws('/' + name, (ws, req) => {
+                api.connect(ws, req);
+            });
             console.log("[WSAPI] " + name + " is loaded. ");
         }).catch((e) => {
             console.log(e);

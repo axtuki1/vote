@@ -2,7 +2,7 @@ import { WebSocketAPI } from "../ws";
 import { DataHolder } from "../DataHolder";
 
 export class obsws extends WebSocketAPI {
-    message(ws, req, msg): void {
+    message(ws, req, msg): Function {
         const data = JSON.parse(msg);
         console.log(data);
         if (data.mode == null) {
