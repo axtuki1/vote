@@ -8,6 +8,7 @@ const app = express();
 const config = require('config');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const port = process.env.PORT || config.serverPort || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -45,8 +46,8 @@ fs.readdir('./build/api', function(err, files){
 
 app.use(router);
 
-app.listen(process.env.PORT || config.serverPort, function () {
-    console.log("listening to PORT: " + process.env.PORT || config.serverPort);
+app.listen(port, function () {
+    console.log("listening to PORT: " + port);
 });
 
 const server = require("ws").Server;
