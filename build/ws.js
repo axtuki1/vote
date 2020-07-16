@@ -14,7 +14,9 @@ class WebSocketAPI {
             DataHolder_1.DataHolder.setData("wsClients", this.clients);
             // this.clients.forEach(a=>{ a.send(JSON.stringify({ user: name, method: 'close', clients: clients.map(a=>name) })); });
         });
-        this.connectFunc(ws, req);
+        ws.on('message', (msg) => {
+            this.message(ws, req, msg);
+        });
     }
     keepAlive() {
         this.clients.forEach(client => {

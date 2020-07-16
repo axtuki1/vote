@@ -13,7 +13,9 @@ export abstract class WebSocketAPI{
             DataHolder.setData("wsClients", this.clients);
             // this.clients.forEach(a=>{ a.send(JSON.stringify({ user: name, method: 'close', clients: clients.map(a=>name) })); });
         });
-        this.connectFunc(ws, req);
+        ws.on('message', (msg)=>{
+            this.message(ws, req, msg);
+        })
     }
 
     keepAlive(){
@@ -30,5 +32,7 @@ export abstract class WebSocketAPI{
      * @param ws WebSocket
      * @param req  Request
      */
-    abstract connectFunc(ws, req);
+    // abstract connectFunc(ws, req);
+
+    abstract message(ws, req, msg);
 };
