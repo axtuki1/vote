@@ -5,6 +5,7 @@ export class obsws extends WebSocketAPI{
     connectFunc(ws, req): void {
         ws.on("message", message => {
             const data = JSON.parse(message);
+            console.log(data);
             if( data.mode == null ){
                 ws.send(JSON.stringify({
                     mode: "error",
