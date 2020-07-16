@@ -5,6 +5,8 @@ export abstract class WebSocketAPI{
     clients=[];
 
     connect(ws, req){
+        console.log("connect");
+        
         this.clients.push(ws);
         DataHolder.setData("wsClients", this.clients);
         ws.on('close', ()=>{

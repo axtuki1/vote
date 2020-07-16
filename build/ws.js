@@ -6,6 +6,7 @@ class WebSocketAPI {
         this.clients = [];
     }
     connect(ws, req) {
+        console.log("connect");
         this.clients.push(ws);
         DataHolder_1.DataHolder.setData("wsClients", this.clients);
         ws.on('close', () => {

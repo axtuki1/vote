@@ -59,11 +59,7 @@ fs.readdir('./build/wsApi', function(err, files){
         import('./wsApi/'+name).then((module)=>{
             const api:WebSocketAPI = new module[name]();
             wsApi[name] = api;
-            if( name == "root" ){
-                app.ws('/', api.connect);
-            } else {
-                app.ws('/'+name, api.connect);
-            }
+            app.ws('/obsws', api.connect);
             console.log("[WSAPI] "+name+" is loaded. ");
         }).catch((e)=>{
             console.log(e);
