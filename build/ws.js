@@ -3,10 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DataHolder_1 = require("./DataHolder");
 class WebSocketAPI {
     constructor() {
-        this.clients = [];
+        this.clients = DataHolder_1.DataHolder.getData("wsClients");
     }
     connect(ws, req) {
-        console.log("connect");
         this.clients.push(ws);
         DataHolder_1.DataHolder.setData("wsClients", this.clients);
         ws.on('close', () => {

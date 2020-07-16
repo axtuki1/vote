@@ -2,11 +2,9 @@ import { DataHolder } from "./DataHolder";
 
 export abstract class WebSocketAPI{
 
-    clients=[];
+    clients=DataHolder.getData("wsClients");
 
     connect(ws, req){
-        console.log("connect");
-        
         this.clients.push(ws);
         DataHolder.setData("wsClients", this.clients);
         ws.on('close', ()=>{

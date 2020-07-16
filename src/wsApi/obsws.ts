@@ -3,6 +3,8 @@ import { DataHolder } from "../DataHolder";
 
 export class obsws extends WebSocketAPI{
     connectFunc(ws, req): void {
+        console.log("c");
+        
         ws.on("message", message => {
             const data = JSON.parse(message);
             console.log(data);

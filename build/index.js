@@ -14,50 +14,6 @@ app.use(bodyParser.json());
 app.use(express.static('dist'));
 app.use("/js/obs", express.static('build/obs'));
 const router = express.Router();
-console.log("Loading webAPI module....");
-fs.readdir('./build/api', function (err, files) {
-    if (err)
-        throw err;
-    files.forEach(element => {
-        let name = element.slice(0, -3);
-        Promise.resolve().then(() => require('./api/' + name)).then((module) => {
-            const api = new module[name]();
-            console.log("[WEBAPI] " + name + " is loaded. endpoint: /api/v1/" + name);
-            let endpoint = "/api/v1/" + name;
-            if (api.type == "post") {
-                router.post(endpoint, (req, res) => {
-                    return api.response(req, res);
-                });
-            }
-            else {
-                router.get(endpoint, (req, res) => {
-                    return api.response(req, res);
-                });
-            }
-        }).catch((e) => {
-            console.log("[" + name + "] " + e);
-        });
-        ;
-    });
-});
-app.use(router);
-const wsApi = {};
-console.log("Loading websocket module....");
-fs.readdir('./build/wsApi', function (err, files) {
-    if (err)
-        throw err;
-    files.forEach(element => {
-        let name = element.slice(0, -3);
-        Promise.resolve().then(() => require('./wsApi/' + name)).then((module) => {
-            const api = new module[name]();
-            wsApi[name] = api;
-            app.ws('/obsws', api.connect);
-            console.log("[WSAPI] " + name + " is loaded. ");
-        }).catch((e) => {
-            console.log(e);
-        });
-    });
-});
 const init = () => {
     let d = DataHolder_1.DataHolder.getData("voteType");
     if (d == null)
@@ -105,6 +61,50 @@ const init = () => {
     DataHolder_1.DataHolder.setData("wsClients", []);
 };
 init();
+console.log("Loading webAPI module....");
+fs.readdir('./build/api', function (err, files) {
+    if (err)
+        throw err;
+    files.forEach(element => {
+        let name = element.slice(0, -3);
+        Promise.resolve().then(() => require('./api/' + name)).then((module) => {
+            const api = new module[name]();
+            console.log("[WEBAPI] " + name + " is loaded. endpoint: /api/v1/" + name);
+            let endpoint = "/api/v1/" + name;
+            if (api.type == "post") {
+                router.post(endpoint, (req, res) => {
+                    return api.response(req, res);
+                });
+            }
+            else {
+                router.get(endpoint, (req, res) => {
+                    return api.response(req, res);
+                });
+            }
+        }).catch((e) => {
+            console.log("[" + name + "] " + e);
+        });
+        ;
+    });
+});
+app.use(router);
+const wsApi = {};
+console.log("Loading websocket module....");
+fs.readdir('./build/wsApi', function (err, files) {
+    if (err)
+        throw err;
+    files.forEach(element => {
+        let name = element.slice(0, -3);
+        Promise.resolve().then(() => require('./wsApi/' + name)).then((module) => {
+            const api = new module[name]();
+            wsApi[name] = api;
+            app.ws('/' + name, api.connect);
+            console.log("[WSAPI] " + name + " is loaded. ");
+        }).catch((e) => {
+            console.log(e);
+        });
+    });
+});
 setInterval(() => {
     Object.keys(wsApi).forEach(key => {
         wsApi[key].keepAlive();
