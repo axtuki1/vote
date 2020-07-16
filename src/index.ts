@@ -5,6 +5,7 @@ import fetch from 'node-fetch';
 
 const express = require('express');
 const app = express();
+const expressWs = require('express-ws')(app);
 const config = require('config');
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -47,14 +48,6 @@ fs.readdir('./build/api', function(err, files){
 
 app.use(router);
 
-app.listen(port, function () {
-    console.log("listening to PORT: " + port);
-    console.log("PORT: " + process.env.PORT);
-    console.log("config.port: " + config.serverPort);
-});
-
-const server = require("ws").Server;
-const s = new server({port: wsPort});
 const wsApi:{[key: string]: WebSocketAPI} = {};
 
 console.log("Loading websocket module....");
@@ -66,6 +59,11 @@ fs.readdir('./build/wsApi', function(err, files){
         import('./wsApi/'+name).then((module)=>{
             const api:WebSocketAPI = new module[name]();
             wsApi[name] = api;
+            if( name == "root" ){
+                app.ws('/', api.connect);
+            } else {
+                app.ws('/'+name, api.connect);
+            }
             console.log("[WSAPI] "+name+" is loaded. ");
         }).catch((e)=>{
             console.log(e);
@@ -114,39 +112,17 @@ const init = () => {
     if( d == null) d = 8;
     DataHolder.setData("oneLine",d);
 }
-
 init();
 setInterval(()=>{
-    s.clients.forEach(client => {
-        client.send(JSON.stringify({
-            "mode": "ping",
-            "text": "keepAlive"
-        }));
+    Object.keys(wsApi).forEach(key => {
+        wsApi[key].keepAlive();
     });
 },25*1000);
-DataHolder.setData("wsServer",s);
-s.on("connection", ws => {
-    
-    init();
 
-    ws.on("message", message => {
-        const data = JSON.parse(message);
-        if( data.mode == null ){
-            ws.send(JSON.stringify({
-                mode: "error",
-                reason: "BadRequest"
-            }));
-            return;
-        }
-        if( data.mode == "hello" ){
-            ws.send(JSON.stringify({
-                mode: "hello",
-                voteType: DataHolder.getData("voteType"),
-                data: DataHolder.getData("voteData"),
-                settings: DataHolder.getData("settings"),
-                title: DataHolder.getData("voteTitle"),
-                oneLine: DataHolder.getData("oneLine")
-            }));
-        }
+setTimeout(()=>{
+    app.listen(port, function () {
+        console.log("listening to PORT: " + port);
+        console.log("PORT: " + process.env.PORT);
+        console.log("config.port: " + config.serverPort);
     });
-});
+}, 500);

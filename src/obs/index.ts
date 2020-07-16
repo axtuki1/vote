@@ -1,9 +1,9 @@
 import { Library } from "../Library";
 
 $(function(){
-    let url = "ws://"+document.domain+"/obsws";
+    let url = "ws://"+document.domain+"/";
     if(location.protocol == 'https:'){
-        url = "wss://"+document.domain+"/obsws"
+        url = "wss://"+document.domain+"/"
     }
 
     const update = () => {
