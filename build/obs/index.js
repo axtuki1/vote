@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Library_1 = require("../Library");
 $(function () {
-    let url = "ws://" + document.domain + "/";
+    let url = "ws://" + document.domain + "/obsws";
     if (location.protocol == 'https:') {
-        url = "wss://" + document.domain + "/";
+        url = "wss://" + document.domain + "/obsws";
     }
     const update = () => {
         $(".obs-area").removeClass("show");

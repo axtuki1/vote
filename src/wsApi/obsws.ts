@@ -1,7 +1,7 @@
 import { WebSocketAPI } from "../ws";
 import { DataHolder } from "../DataHolder";
 
-export class root extends WebSocketAPI{
+export class obsws extends WebSocketAPI{
     connectFunc(ws, req): void {
         ws.on("message", message => {
             const data = JSON.parse(message);
