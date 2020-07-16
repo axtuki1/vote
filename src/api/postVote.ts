@@ -44,7 +44,7 @@ export class postVote extends API{
             mode: "ok",
             target: data.type
         });
-        DataHolder.getData("wsServer").clients.forEach(function(client){
+        DataHolder.getData("wsClients").clients.forEach(function(client){
             client.send(JSON.stringify({
                 mode: "update-data",
                 type: data.type,

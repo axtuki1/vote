@@ -14,7 +14,7 @@ class setOneLine extends api_1.API {
                 mode: "ok",
                 oneline: DataHolder_1.DataHolder.getData("oneLine")
             });
-            DataHolder_1.DataHolder.getData("wsServer").clients.forEach(function (client) {
+            DataHolder_1.DataHolder.getData("wsClients").clients.forEach(function (client) {
                 client.send(JSON.stringify({
                     mode: "update-oneline",
                     oneline: DataHolder_1.DataHolder.getData("oneLine")

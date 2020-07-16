@@ -11,7 +11,7 @@ class setVoteType extends api_1.API {
                 req.body.data = [];
             DataHolder_1.DataHolder.setData("voteType", req.body.data);
             res.json(DataHolder_1.DataHolder.getData("voteType"));
-            DataHolder_1.DataHolder.getData("wsServer").clients.forEach(function (client) {
+            DataHolder_1.DataHolder.getData("wsClients").forEach(function (client) {
                 client.send(JSON.stringify({
                     mode: "update-type",
                     type: DataHolder_1.DataHolder.getData("voteType")

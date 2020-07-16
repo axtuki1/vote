@@ -13,7 +13,7 @@ class setSettings extends api_1.API {
                 mode: "ok",
                 settings: req.body.data
             });
-            DataHolder_1.DataHolder.getData("wsServer").clients.forEach(function (client) {
+            DataHolder_1.DataHolder.getData("wsClients").forEach(function (client) {
                 client.send(JSON.stringify({
                     mode: "update-settings",
                     settings: req.body.data

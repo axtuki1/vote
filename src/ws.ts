@@ -1,12 +1,16 @@
+import { DataHolder } from "./DataHolder";
+
 export abstract class WebSocketAPI{
 
     clients=[];
 
     connect(ws, req){
         this.clients.push(ws);
+        DataHolder.setData("wsClients", this.clients);
         ws.on('close', ()=>{
             const name=this.clients.find(a=> a===ws).name;
             this.clients=this.clients.filter(a=> a!==ws);
+            DataHolder.setData("wsClients", this.clients);
             // this.clients.forEach(a=>{ a.send(JSON.stringify({ user: name, method: 'close', clients: clients.map(a=>name) })); });
         });
         this.connectFunc(ws, req);

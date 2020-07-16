@@ -10,7 +10,7 @@ export class setVoteTitle extends API{
             mode: "ok",
             title: DataHolder.getData("voteTitle")
         });
-        DataHolder.getData("wsServer").clients.forEach(function(client){
+        DataHolder.getData("wsClients").forEach(function(client){
             client.send(JSON.stringify({
                 mode: "update-title",
                 title: DataHolder.getData("voteTitle")
