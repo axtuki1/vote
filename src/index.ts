@@ -9,6 +9,7 @@ const config = require('config');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || config.serverPort || 3000;
+const wsPort = process.env.PORT || config.websocketPort || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -53,7 +54,7 @@ app.listen(port, function () {
 });
 
 const server = require("ws").Server;
-const s = new server(app);
+const s = new server({port: wsPort});
 const wsApi:{[key: string]: WebSocketAPI} = {};
 
 console.log("Loading websocket module....");
