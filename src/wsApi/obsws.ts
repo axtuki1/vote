@@ -4,7 +4,7 @@ import { DataHolder } from "../DataHolder";
 export class obsws extends WebSocketAPI {
     message(ws, req, msg): Function {
         const data = JSON.parse(msg);
-        console.log(data);
+        // console.log(data);
         if (data.mode == null) {
             ws.send(JSON.stringify({
                 mode: "error",
