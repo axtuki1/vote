@@ -78,9 +78,9 @@ input[type="color"]::-webkit-color-swatch {
 		flex: 1;
 		width: 100%;
 	}
-	.vote-group > * {
+	.vote-group {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		flex-wrap: wrap;
 		justify-content: center;
 		.vote {
@@ -90,7 +90,7 @@ input[type="color"]::-webkit-color-swatch {
 			width: 100%;
 			margin: 0;
 			text-align: center;
-			height: 10rem;
+			height: 5rem;
 			background: #FFF;
 			border: 2px solid #646464;
 			border-radius: 10px;

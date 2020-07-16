@@ -111,6 +111,10 @@ const init = () => {
     d = DataHolder.getData("oneLine");
     if( d == null) d = 8;
     DataHolder.setData("oneLine",d);
+
+    d = DataHolder.getData("wsClients");
+    if( d == null) d = 8;
+    DataHolder.setData("wsClients",[]);
 }
 init();
 setInterval(()=>{

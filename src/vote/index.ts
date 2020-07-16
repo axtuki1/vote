@@ -26,19 +26,20 @@ $(function(){
                 $(".vote-wrapper").show();
                 Object.keys(data["data"]).forEach(key => {
                     const element = data["data"][key];
-                    if($(".vote-group-"+i).get(0) == null){
-                        $(".vote-group").append(
-                            $("<div></div>").addClass("vote-group-"+i)
-                        );
-                    } else if($(".vote-group-"+i+" > *").length >= oneline){
-                        i++;
-                        $(".vote-group").append(
-                            $("<div></div>").addClass("vote-group-"+i)
-                        );
-                    }
-                    let el = $("<div></div>").addClass("vote").append(element["text"]).css("background",element["backColor"]).css("color",element["color"]).css("width","calc("+100/oneline+"% - 10px)");
+                    // if($(".vote-group-"+i).get(0) == null){
+                    //     $(".vote-group").append(
+                    //         $("<div></div>").addClass("vote-group-"+i)
+                    //     );
+                    // } else if($(".vote-group-"+i+" > *").length >= oneline){
+                    //     i++;
+                    //     $(".vote-group").append(
+                    //         $("<div></div>").addClass("vote-group-"+i)
+                    //     );
+                    // }
+                    let el = $("<div></div>").addClass("vote").append(element["text"]).css("background",element["backColor"]).css("color",element["color"]);
                     el.get(0).dataset.id = key;
-                    $(".vote-group-"+i).append(el);
+                    // $(".vote-group-"+i).append(el);
+                    $(".vote-group").append(el);
                 });
             } else if( data["mode"] == "error" ){
                 $(".top").html(data["text"]);
