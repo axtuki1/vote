@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "type-watch": "tsc -w",
     "web-watch": "webpack -w",
-    "build": "webpack"
+    "build": "tsc && webpack"
   },
   "author": "",
   "license": "ISC",

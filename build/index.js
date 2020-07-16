@@ -6,12 +6,15 @@ const app = express();
 const config = require('config');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const port = process.env.PORT || config.serverPort || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('dist'));
 app.use("/js/obs", express.static('build/obs'));
 const router = express.Router();
-console.log("Loading webAPI module....");
+console.log("PORT: " + process.env.PORT);
+console.log("config.port: " + config.serverPort);
+// console.log("Loading webAPI module....");
 fs.readdir('./build/api', function (err, files) {
     if (err)
         throw err;
@@ -23,12 +26,12 @@ fs.readdir('./build/api', function (err, files) {
             let endpoint = "/api/v1/" + name;
             if (api.type == "post") {
                 router.post(endpoint, (req, res) => {
-                    return api.response(req, res);
+                    // return api.response(req, res);
                 });
             }
             else {
                 router.get(endpoint, (req, res) => {
-                    return api.response(req, res);
+                    // return api.response(req, res);
                 });
             }
         }).catch((e) => {
@@ -38,13 +41,13 @@ fs.readdir('./build/api', function (err, files) {
     });
 });
 app.use(router);
-app.listen(config.serverPort, function () {
-    console.log("listening to PORT: " + config.serverPort);
+app.listen(port, function () {
+    console.log("listening to PORT: " + port);
 });
 const server = require("ws").Server;
-const s = new server({ port: config.websocketPort });
+const s = new server(app);
 const wsApi = {};
-console.log("Loading websocket module....");
+// console.log("Loading websocket module....");
 fs.readdir('./build/wsApi', function (err, files) {
     if (err)
         throw err;
@@ -53,7 +56,7 @@ fs.readdir('./build/wsApi', function (err, files) {
         Promise.resolve().then(() => require('./wsApi/' + name)).then((module) => {
             const api = new module[name]();
             wsApi[name] = api;
-            console.log("[WSAPI] " + name + " is loaded. ");
+            // console.log("[WSAPI] "+name+" is loaded. ");
         }).catch((e) => {
             console.log(e);
         });

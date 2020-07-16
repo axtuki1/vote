@@ -19,10 +19,7 @@ app.use("/js/obs", express.static('build/obs'));
 
 const router = express.Router();
 
-console.log("PORT: " + process.env.PORT);
-console.log("config.port: " + config.serverPort);
-
-// console.log("Loading webAPI module....");
+console.log("Loading webAPI module....");
 
 fs.readdir('./build/api', function(err, files){
     if (err) throw err;    
@@ -34,11 +31,11 @@ fs.readdir('./build/api', function(err, files){
             let endpoint = "/api/v1/"+name;
             if( api.type == "post" ){
                 router.post(endpoint, (req, res)=>{
-                    // return api.response(req, res);
+                    return api.response(req, res);
                 });
             } else {
                 router.get(endpoint, (req, res)=>{
-                    // return api.response(req, res);
+                    return api.response(req, res);
                 });
             }
         }).catch((e)=>{
@@ -51,13 +48,15 @@ app.use(router);
 
 app.listen(port, function () {
     console.log("listening to PORT: " + port);
+    console.log("PORT: " + process.env.PORT);
+    console.log("config.port: " + config.serverPort);
 });
 
 const server = require("ws").Server;
 const s = new server(app);
 const wsApi:{[key: string]: WebSocketAPI} = {};
 
-// console.log("Loading websocket module....");
+console.log("Loading websocket module....");
 
 fs.readdir('./build/wsApi', function(err, files){
     if (err) throw err;    
@@ -66,7 +65,7 @@ fs.readdir('./build/wsApi', function(err, files){
         import('./wsApi/'+name).then((module)=>{
             const api:WebSocketAPI = new module[name]();
             wsApi[name] = api;
-            // console.log("[WSAPI] "+name+" is loaded. ");
+            console.log("[WSAPI] "+name+" is loaded. ");
         }).catch((e)=>{
             console.log(e);
         });
