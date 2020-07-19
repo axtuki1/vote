@@ -9,7 +9,7 @@ export class resetVoteData extends API{
         res.json({
             "mode": "ok"
         });
-        DataHolder.getData("wsClients").clients.forEach(function(client){
+        DataHolder.getData("wsClients").forEach(function(client){
             client.send(JSON.stringify({
                 mode: "update-data",
                 data: DataHolder.getData("voteData")

@@ -10,7 +10,7 @@ export class setOneLine extends API{
             mode: "ok",
             oneline: DataHolder.getData("oneLine")
         });
-        DataHolder.getData("wsClients").clients.forEach(function(client){
+        DataHolder.getData("wsClients").forEach(function(client){
             client.send(JSON.stringify({
                 mode: "update-oneline",
                 oneline: DataHolder.getData("oneLine")
