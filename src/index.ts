@@ -1,7 +1,6 @@
 import { API } from "./api";
 import { DataHolder } from "./DataHolder";
 import { WebSocketAPI } from "./ws";
-import fetch from 'node-fetch';
 
 const express = require('express');
 const app = express();
@@ -11,7 +10,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || config.serverPort || 3000;
 const wsPort = process.env.PORT || config.websocketPort || 3000;
-const isProxy = process.env.IS_PROXY || config.isPorxy || false;
+const isProxy = Boolean(process.env.IS_PROXY) || config.isPorxy || false;
 
 app.set('trust proxy', isProxy);
 
