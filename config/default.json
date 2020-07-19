@@ -1,4 +1,5 @@
 {
     "serverPort": 3012,
-    "websocketPort": 5012
+    "websocketPort": 5012,
+    "isProxy": false
 }

@@ -4,9 +4,14 @@ import { DataHolder } from "../DataHolder";
 export class postVote extends API{
     public type: string = "post";
     public response = (req, res) => {
-        console.log(req);
+        // console.log(req);
         let data = req.body;
-        let ip = req.header("X-Real-IP");
+        let ip = req.ip;
+        if( ip == null ){
+            ip = req.header("X-Forwarded-For");
+        } else if( ip == null ){
+            ip = req.header("Cf-Connecting-Ip");
+        }
         const settings = DataHolder.getData("settings");
         // console.log(settings);
         const voteType = DataHolder.getData("voteType");

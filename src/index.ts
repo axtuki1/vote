@@ -11,6 +11,9 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || config.serverPort || 3000;
 const wsPort = process.env.PORT || config.websocketPort || 3000;
+const isProxy = process.env.IS_PROXY || config.isPorxy || false;
+
+app.set('trust proxy', isProxy);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
