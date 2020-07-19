@@ -4,6 +4,7 @@ import { DataHolder } from "../DataHolder";
 export class postVote extends API{
     public type: string = "post";
     public response = (req, res) => {
+        console.log(req);
         let data = req.body;
         let ip = req.header("X-Real-IP");
         const settings = DataHolder.getData("settings");
